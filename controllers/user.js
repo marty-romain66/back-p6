@@ -1,12 +1,13 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const validator = require("email-validator");
 
+const User = require("../models/user");
+
 // User signup controller
 exports.signup = (req, res, next) => {
-  const emailInvalide = validator.validate(req.body.email);
-  if (!emailInvalide) {
+  const isValidateEmail = validator.validate(req.body.email);
+  if (!isValidateEmail) {
     res.writeHead(400, 'Email incorrect !"}', {
       "content-type": "application/json",
     });
@@ -27,8 +28,6 @@ exports.signup = (req, res, next) => {
       .catch((error) => res.status(500).json({ error }));
   }
 };
-
-// user login controller
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
@@ -43,7 +42,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, process.env.JWT, {
+            token: jwt.sign({ userId: user._id }, 'udl*VFMnxp5Crly-({', {
               expiresIn: "24h",
             }),
           });
