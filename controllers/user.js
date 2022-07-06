@@ -4,7 +4,7 @@ const validator = require("email-validator");
 
 const User = require("../models/user");
 
-// User signup controller
+
 exports.signup = (req, res, next) => {
   const isValidateEmail = validator.validate(req.body.email);
   if (!isValidateEmail) {
@@ -25,7 +25,7 @@ exports.signup = (req, res, next) => {
           .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
           .catch((error) => res.status(400).json({ error }));
       })
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(401).json({ error }));
   }
 };
 exports.login = (req, res, next) => {
@@ -42,12 +42,13 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, 'udl*VFMnxp5Crly-({', {
+            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "24h",
             }),
           });
         })
-        .catch((error) => res.status(500).json({ error }));
+        .catch((error) => res.status(401).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(401).json({ error }));
+    
 };

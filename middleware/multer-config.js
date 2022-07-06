@@ -1,3 +1,5 @@
+//Middleware pour envoi de fichier
+
 const multer = require('multer');
 
 const MIME_TYPES = {

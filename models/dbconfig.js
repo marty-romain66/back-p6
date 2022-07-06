@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
+  require('dotenv').config({path : "./config/.env"});
 
-mongoose.connect('mongodb+srv://martyromaindev:Coline66..@cluster0.9tz5b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  //Configuration BDD
+mongoose.connect(process.env.DB_CONNECTION,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
